@@ -1,0 +1,13 @@
+1.txt
+Udacity_Cpp_Chapters-master.zip
+CppND-Route-Planning-Project/*.swp
+CppND-Route-Planning-Project/*.osm
+CppND-Route-Planning-Project/!map.osm
+CppND-Route-Planning-Project/*.o
+CppND-Route-Planning-Project/draw.cpp
+CppND-Route-Planning-Project/test.cpp
+CppND-Route-Planning-Project/build/
+CppND-Route-Planning-Project/bin/
+CppND-Route-Planning-Project/lib/
+CppND-Route-Planning-Project/P0267_RefImpl/
+CppND-Route-Planning-Project.github/**
