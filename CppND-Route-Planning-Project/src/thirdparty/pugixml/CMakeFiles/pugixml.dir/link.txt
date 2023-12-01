@@ -1,0 +1,2 @@
+/usr/bin/ar qc /home/aymanacio/cpp_nd/CppND-Route-Planning-Project/lib/libpugixml.a CMakeFiles/pugixml.dir/src/pugixml.cpp.o
+/usr/bin/ranlib /home/aymanacio/cpp_nd/CppND-Route-Planning-Project/lib/libpugixml.a
