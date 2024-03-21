@@ -11,8 +11,8 @@ RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, floa
     // TODO 2: Use the m_Model.FindClosestNode method to find the closest nodes to the starting and ending coordinates.
     // Store the nodes you find in the RoutePlanner's start_node and end_node attributes.
     
-    start_node = &model.FindClosestNode(start_x, start_y);
-    end_node = &model.FindClosestNode(end_x, end_y);
+    start_node = &m_Model.FindClosestNode(start_x, start_y);
+    end_node = &m_Model.FindClosestNode(end_x, end_y);
     
 
 }
@@ -42,8 +42,8 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
       neighbor->parent = current_node;
       neighbor->g_value = current_node->g_value + current_node->distance(*neighbor);
       neighbor->h_value = CalculateHValue(neighbor);
-      open_list.push_back(neighbor);
       neighbor->visited = true;
+      open_list.emplace_back(neighbor);
     }
 
 }
@@ -86,6 +86,7 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
       current_node = current_node->parent;
     }
     path_found.push_back(*current_node);
+    std::reverse(path_found.begin(), path_found.end());
     distance *= m_Model.MetricScale(); // Multiply the distance by the scale of the map to get meters.
     return path_found;
 
@@ -106,18 +107,17 @@ void RoutePlanner::AStarSearch() {
     // end_node->parent = start_node;
     // m_Model.path = ConstructFinalPath(end_node);
     
-    start_node->visited = true;
+    RouteModel::Node* current_node = start_node;
+    current_node->visited = true;
     open_list.push_back(start_node);
-    RouteModel::Node *current_node = nullptr;
+    
     
     while(open_list.size()>0){
+      AddNeighbors(current_node);
       current_node = NextNode();
-      if (current_node->distance(*end_node)==0){
-        m_Model.path = ConstructFinalPath(current_node);
+      if (current_node->h_value==0){
         break;
       }
-      else {
-        AddNeighbors(current_node);
-      }
     }
+    m_Model.path = ConstructFinalPath(current_node);
 }

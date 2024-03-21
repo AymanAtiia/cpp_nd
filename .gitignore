@@ -11,3 +11,11 @@ CppND-Route-Planning-Project/bin/
 CppND-Route-Planning-Project/lib/
 CppND-Route-Planning-Project/P0267_RefImpl/
 CppND-Route-Planning-Project.github/**
+
+CppND-System-Monitor-master/monitor
+CppND-System-Monitor-master/a.out
+CppND-System-Monitor-master/settings.json
+CppND-System-Monitor-master/*.o
+CppND-System-Monitor-master/build/*
+CppND-System-Monitor-master/*.json
+CppND-System-Monitor-master/.github/**
