@@ -20,3 +20,8 @@ CppND-System-Monitor-master/*.o
 CppND-System-Monitor-master/build/*
 CppND-System-Monitor-master/*.json
 CppND-System-Monitor-master/.github/**
+
+
+system_monitor/*
+Udacity_Cpp_Chapters-master/*
+UdacityCPP-master/*

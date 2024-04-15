@@ -3,7 +3,7 @@
 #include <string>
 #include <thread>
 #include <vector>
-
+#include <iostream>
 #include "format.h"
 #include "ncurses_display.h"
 #include "system.h"
@@ -28,6 +28,22 @@ std::string NCursesDisplay::ProgressBar(float percent) {
   return result + " " + display + "/100%";
 }
 
+// void DisplayMem(std::vector <float> memory, WINDOW* window){
+
+//   attron(COLOR_PAIR(1)); printw("0%"); attroff(COLOR_PAIR(1));
+//   float total_mem = (memory[1])/memory[0];
+//   int size{50};
+//   std::string result;
+//   float bars{total_mem * size};
+
+//   for (int i{0}; i < size; ++i) {
+//     result += i <= bars ? '|' : ' ';
+//   }
+//   attron(COLOR_PAIR(1)); wprintw(window, result.c_str()); attroff(COLOR_PAIR(1));
+//   // std::string bufs = ProgressBar((mem[2])/mem[0]);
+
+// }
+
 void NCursesDisplay::DisplaySystem(System& system, WINDOW* window) {
   int row{0};
   mvwprintw(window, ++row, 2, ("OS: " + system.OperatingSystem()).c_str());
@@ -40,8 +56,18 @@ void NCursesDisplay::DisplaySystem(System& system, WINDOW* window) {
   mvwprintw(window, ++row, 2, "Memory: ");
   wattron(window, COLOR_PAIR(1));
   mvwprintw(window, row, 10, "");
-  wprintw(window, ProgressBar(system.MemoryUtilization()).c_str());
+
+  auto mem = system.MemoryUtilization();
+  
+  std::string total_mem = ProgressBar((mem[0]-mem[1])/mem[0]);
+
+  wprintw(window, total_mem.c_str());
+  // DisplayMem(mem,window);
   wattroff(window, COLOR_PAIR(1));
+
+  // wattron(window, COLOR_PAIR(3));
+  // wprintw(window, bufs.c_str());
+  // wattroff(window, COLOR_PAIR(3));
   mvwprintw(window, ++row, 2,
             ("Total Processes: " + to_string(system.TotalProcesses())).c_str());
   mvwprintw(
@@ -100,6 +126,9 @@ void NCursesDisplay::Display(System& system, int n) {
   while (1) {
     init_pair(1, COLOR_BLUE, COLOR_BLACK);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
+    // memory colors
+    init_pair(3, COLOR_CYAN, COLOR_BLACK);
+    init_pair(4, COLOR_RED, COLOR_BLACK);
     box(system_window, 0, 0);
     box(process_window, 0, 0);
     DisplaySystem(system, system_window);
